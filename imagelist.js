@@ -32,42 +32,63 @@ document.addEventListener("DOMContentLoaded", function() {
   
   var imageKeys = Object.keys(images);
   var currImage = imageKeys.length - 1;
-  
-  setImage();
+  var archiveList = document.getElementsByClassName('archive-link');
   
   imageKeys.forEach(function(key) {
-    document.getElementById("image-list-ol").innerHTML += '<li>' + 
+    document.getElementById("image-list-ol").innerHTML += '<li class="archive-link" id="archive-link-' +
+      key +
+      '">' + 
       images[key].title + 
       '</li>';
   });
+  
+  setImage();
   
   //controls to move around the list
   
   //return to start
   document.getElementById("control-first").addEventListener("click", function() {
-    currImage = 0;
-    setImage();
+    setImage('first');
   });
   
   //previous image
   document.getElementById("control-previous").addEventListener("click", function() {
-    currImage -= 1;
-    setImage();
+    setImage('previous');
   });
   
   //next image
   document.getElementById("control-next").addEventListener("click", function() {
-    currImage += 1;
-    setImage();
+    setImage('next');
   });
   
   //latest image
   document.getElementById("control-latest").addEventListener("click", function() {
-    currImage = Object.keys(images).length - 1;
-    setImage();
+    setImage('latest');
   });
   
-  function setImage() {
+  //clicking archive link
+  //todo
+  
+  function setImage(direction) {
+    //remove previous active list
+    document.getElementById("archive-link-" + currImage).classList.remove("active");
+    //set next current image
+    switch(direction) {
+      case 'first':
+        currImage = 0;
+        break;
+      case 'previous':
+        currImage -=1;
+        break;
+      case 'next':
+        currImage += 1;
+        break;
+      case 'latest':
+        currImage = imageKeys.length - 1;
+      default:
+        break;
+    }
+    //set new image
     document.getElementById("image").innerHTML = '<h2>' + 
     (currImage + 1) +
     ': ' +
@@ -75,6 +96,9 @@ document.addEventListener("DOMContentLoaded", function() {
     '</h2><img src=' +
     images[currImage].img +
     '>';
+    //set archive link
+    document.getElementById("archive-link-" + currImage).classList.add("active");
+    //set new description if applicable
     if (images[currImage].desc) {
       document.getElementById("description").innerHTML = '<p>' +
         images[currImage].desc +

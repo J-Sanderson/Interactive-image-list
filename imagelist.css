@@ -1,3 +1,30 @@
-#controls p span, #image-list-ol li {
+button, #image-list-ol li {
   cursor: pointer;
+}
+
+header {
+  text-align: center;
+}
+
+main {
+  width: 700px; /* adjust depending on image size */
+  margin: auto;
+}
+
+#image {
+  text-align: center;
+}
+
+#controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.archive-link {
+  color: blue;
+}
+
+.active {
+  font-weight: bold;
 }

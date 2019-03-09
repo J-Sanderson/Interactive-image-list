@@ -17,7 +17,7 @@ var images = [
   {
     'img': 'https://placeimg.com/640/480/people',
     'title': 'Nulla libero lorem',
-    'desc': 'Maecenas sed aliquam metus, in pretium nibh. Vivamus convallis nunc finibus lectus consectetur, id dapibus justo ultrices. Suspendisse euismod nulla erat, eget condimentum leo pretium sed. Praesent dignissim purus sapien, et faucibus neque dictum quis. Duis tincidunt nisi id semper ornare. Maecenas vitae egestas elit.'
+    'desc': 'Maecenas sed aliquam metus, in pretium nibh. Vivamus convallis nunc finibus lectus consectetur, id dapibus justo ultrices. Suspendisse euismod nulla erat, eget condimentum leo pretium sed.</p><p> Praesent dignissim purus sapien, et faucibus neque dictum quis. Duis tincidunt nisi id semper ornare. Maecenas vitae egestas elit.'
   },
   {
     'img': 'https://placeimg.com/640/480/tech',
@@ -67,24 +67,38 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   //clicking archive link
-  //todo
+  document.getElementById("image-list-ol").addEventListener("click", function(e) {
+    var clicked = parseInt(e.target.id.slice(-1));
+    if (!isNaN(clicked)) {
+      setImage('menu', clicked);
+    }
+    
+  });
   
-  function setImage(direction) {
+  function setImage(direction, menuIndex) {
     //remove previous active list
     document.getElementById("archive-link-" + currImage).classList.remove("active");
-    //set next current image
+    //set next current image (if passed in from nav buttons)
     switch(direction) {
       case 'first':
         currImage = 0;
         break;
       case 'previous':
-        currImage -=1;
+        if (currImage !== 0) {
+          currImage -=1;
+        }
         break;
       case 'next':
-        currImage += 1;
+        if (currImage < imageKeys.length -1) {
+          currImage += 1;
+        }
         break;
       case 'latest':
         currImage = imageKeys.length - 1;
+        break;
+      case 'menu':
+        currImage = menuIndex;
+        break;
       default:
         break;
     }
